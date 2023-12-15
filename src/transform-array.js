@@ -17,7 +17,7 @@ function transform(arr) {
   if (!Array.isArray(arr)) {
     throw new Error("'arr' parameter must be an instance of the Array!");
   }
-  const newArr = [...arr];
+  let newArr = [...arr];
   for (let i = 0; i < newArr.length; i++) {
     if (newArr[i] === "--double-next") {
       if (newArr[newArr.length - 1] !== "--double-next") {
@@ -32,10 +32,10 @@ function transform(arr) {
         newArr.splice(0, 1, null);
       }
     } else if (newArr[i] === "--discard-next") {
-      if (newArr[newArr.length - 1] !== "--discard-next") {
-        newArr.splice(i, 2);
+      if (newArr[newArr.length - 1] === "--discard-next") {
+        newArr.splice(i, 1);
       } else {
-        newArr.splice(i, 1, null);
+        newArr.splice(i, 2, null);
       }
     } else if (newArr[i] === "--double-prev") {
       if (newArr[0] !== "--double-prev") {
@@ -45,15 +45,15 @@ function transform(arr) {
       }
     }
   }
-  let res = []
-  for(let i = 0; i < newArr.length; i++) {
-    if(newArr[i] !== null) {
-      res.push(newArr[i])
+  let res = [];
+  for (let i = 0; i < newArr.length; i++) {
+    if (newArr[i] !== null) {
+      res.push(newArr[i]);
     }
   }
   return res;
 }
-transform([1, 2, 3, '--discard-next', 1337, '--double-prev', 4, 5]);
+//transform([1, 2, 3, "--discard-next", 1337, "--double-prev", 4, 5]);
 
 module.exports = {
   transform,

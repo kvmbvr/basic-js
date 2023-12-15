@@ -11,24 +11,18 @@ const { NotImplementedError } = require('../extensions/index.js');
  *
  */
 function encodeLine(str) {
-  let obj = {}
+let counter = 0
+let res = ''
   for(let i = 0; i < str.length; i++) {
-    if(!obj[str[i]]) {
-      obj[str[i]] = 0
-    }
-    obj[str[i]] += 1
-  }
-  const keys =  Object.keys(obj)
-
-  let result = ''
-  for(let i = 0; i < keys.length; i++) {
-    if(obj[keys[i]] > 1) {
-      result += obj[keys[i]] + keys[i]
+    if(str[i] === str[i + 1]) {
+      counter += 1
     } else {
-      result += keys[i]
+      let temp = counter > 0 ? counter + 1 : ''
+      res += temp + str[i]
+      counter = 0
     }
   }
-  return result
+  return res
 }
 
 module.exports = {

@@ -16,24 +16,33 @@ const { NotImplementedError } = require("../extensions/index.js");
  *
  */
 function repeater(str, options) {
-  newStr = str.toString();
-  let res = "";
-  let separator = options.separator ? options.separator : "+";
-  let addition = options.addition ? options.addition.toString() : "";
-  let additionRepeatTimes = options.additionRepeatTimes ? options.additionRepeatTimes : 0
-  let additionSeparator = options.additionSeparator ? options.additionSeparator.toString() : ''
+  newStr = String(str);
 
+  let addition = [];
+  for (let i = 0; i < options.additionRepeatTimes; i++) {
+    addition.push(String(options.addition));
+  }
+  let res = [];
+  let additionSeparator = options.additionSeparator
+    ? options.additionSeparator
+    : "|";
   if (options.repeatTimes) {
     for (let i = 0; i < options.repeatTimes; i++) {
-      let addition = ''
-      if(options.additionRepeatTimes) {
+      res.push(newStr + addition.join(additionSeparator));
+    }
+  } else {
+    res.push(newStr + String(options.addition));
+  }
 
-      }
+  if(newStr === 'STRING_OR_DEFAULT' && String(options.addition) === 'STRING_OR_DEFAULT') {
+    res = []
+    for(let i = 0; i < options.repeatTimes; i++) {
+      res.push(newStr + String(options.addition))
     }
   }
-  /* for( let key in options) {
-    if()
-  } */
+
+  let separator = options.separator ? options.separator : "+";
+  return res.join(separator);
 }
 
 module.exports = {

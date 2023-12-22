@@ -24,51 +24,59 @@ const { NotImplementedError } = require("../extensions/index.js");
  * ]
  */
 function minesweeper(matrix) {
+  const rows = matrix.length;
+  const cols = matrix[0].length;
+  const result = [];
 
-  for(let i = 0; i < matrix.length; i++) {
-    for(let k = 0; k < matrix[i].length; k++) {
-      
-    }
+  for (let i = 0; i < rows; i++) {
+    result.push(Array(cols).fill(0));
   }
-  /* let columns = matrix[0].length
-  for(let i = 0; i < matrix.length; i++) {
-    for(let k = 0; k < columns; k++) {
-      //console.log(matrix[i][k - 1])
-      console.log(matrix[k][i + 1])
-    }
-  } */
-  /* let res = [];
-  for (let i = 0; i < matrix.length; i++) {
-    let temp = [];
-    for (let k = 0; k < matrix[i].length; k++) {
-      if (
-        matrix[i][k + 1] === true ||
-        matrix[i][k - 1] === true ||
-        matrix[k][i + 1] === true ||
-        matrix[k][i - 1] === true ||
-        matrix[k + 1][i + 1] === true ||
-        matrix[k - 1][i - 1] === true
-      ) {
-        temp.push(Number(true));
-      } else {
-        temp.push(Number(false));
+
+  for (let i = 0; i < rows; i++) {
+    for (let j = 0; j < cols; j++) {
+      if (matrix[i][j]) {
+        const directions = [
+          [-1, -1], [-1, 0], [-1, 1],
+          [0, -1],           [0, 1],
+          [1, -1], [1, 0], [1, 1]
+        ];
+      
+        for (const [dx, dy] of directions) {
+          const newRow = i + dx;
+          const newCol = j + dy;
+      
+          if (newRow >= 0 && newRow < result.length && newCol >= 0 && newCol < result[0].length) {
+            result[newRow][newCol]++;
+          }
+        }
       }
     }
-    res.push(temp);
   }
-  return res; */
+
+  return result;
 }
+
+
+const matrix = [
+  [true, false, false],
+  [false, true, false],
+  [false, false, false]
+];
+
+const result = minesweeper(matrix);
+console.log(result);
+
 
 /* minesweeper([
   [true, false, false],
   [false, true, false],
   [false, false, false],
 ]); */
-minesweeper([
+/* minesweeper([
   [1, 2, 3],
   [4, 5, 6],
   [7, 8, 9],
-]);
+]); */
 
 module.exports = {
   minesweeper,
